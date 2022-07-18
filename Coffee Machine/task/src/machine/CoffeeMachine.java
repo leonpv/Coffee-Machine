@@ -26,57 +26,124 @@ public class CoffeeMachine {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        printIngredients();
+        boolean stop = false;
+        while (!stop) {
+            System.out.println("Write action (buy, fill, take, remaining, exit):");
+            String action = scanner.next();
+            switch (action) {
+                case "exit":
+                    stop = true;
+                    break;
+                case "remaining":
+                    printIngredients();
+                    break;
+                case "buy":
+                    System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:");
+                    switch (scanner.next()) {
+                        case "1":
+                            buyEspresso();
+                            break;
+                        case "2":
+                            buyLatte();
+                            break;
+                        case "3":
+                            buyCappuccino();
+                            break;
+                        case "back":
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "fill":
+                    System.out.println("Write how many ml of water you want to add: ");
+                    countOfWater += scanner.nextInt();
+                    System.out.println("Write how many ml of milk you want to add: ");
+                    countOfMilk += scanner.nextInt();
+                    System.out.println("Write how many grams of coffee beans you want to add:");
+                    countOfBeans += scanner.nextInt();
+                    System.out.println("Write how many disposable cups of coffee you want to add: ");
+                    countOfDisposableCups += scanner.nextInt();
+                    break;
+                case "take":
+                    countOfMoney = 0;
+                    break;
+                default:
+                    break;
+            }
 
-        System.out.println("Write action (buy, fill, take): ");
-        String action = scanner.next();
-        switch (action) {
-            case "buy":
-                System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ");
-                switch (scanner.nextInt()) {
-                    case 1:
-                        countOfWater -= espressoNeedWater;
-                        countOfBeans -= espressoNeedBeans;
-                        countOfMoney += espressoCosts;
-                        countOfDisposableCups--;
-                        break;
-                    case 2:
-                        countOfWater -= latteNeedWater;
-                        countOfMilk -= latteNeedMilk;
-                        countOfBeans -= latteNeedBeans;
-                        countOfMoney += latteCosts;
-                        countOfDisposableCups--;
-                        break;
-                    case 3:
-                        countOfWater -= cappuccinoNeedWater;
-                        countOfMilk -= cappuccinoNeedMilk;
-                        countOfBeans -= cappuccinoNeedBeans;
-                        countOfMoney += cappuccinoCosts;
-                        countOfDisposableCups--;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case "fill":
-                System.out.println("Write how many ml of water you want to add: ");
-                countOfWater += scanner.nextInt();
-                System.out.println("Write how many ml of milk you want to add: ");
-                countOfMilk += scanner.nextInt();
-                System.out.println("Write how many grams of coffee beans you want to add:");
-                countOfBeans += scanner.nextInt();
-                System.out.println("Write how many disposable cups of coffee you want to add: ");
-                countOfDisposableCups += scanner.nextInt();
-                break;
-            case "take":
-                countOfMoney = 0;
-                break;
-            default:
-                break;
         }
-        printIngredients();
 
+    }
 
+    private static void buyEspresso() {
+
+        if(countOfWater - espressoNeedWater <= 0) {
+            System.out.println("Sorry, not enough water!");
+            return;
+        } else countOfWater -= espressoNeedWater;
+
+        if(countOfBeans - espressoNeedBeans <= 0) {
+            System.out.println("Sorry, not enough coffee beans!");
+            return;
+        } else countOfBeans -= espressoNeedBeans;
+
+        if(countOfDisposableCups - 1 <= 0) {
+            System.out.println("Sorry, not enough disposable cups of coffee!");
+            return;
+        } else countOfDisposableCups--;
+
+        countOfMoney += espressoCosts;
+    }
+
+    private static void buyLatte() {
+
+        if(countOfWater - latteNeedWater <= 0) {
+            System.out.println("Sorry, not enough water!");
+            return;
+        } else countOfWater -= latteNeedWater;
+
+        if(countOfMilk - latteNeedMilk <= 0) {
+            System.out.println("Sorry, not enough milk!");
+            return;
+        } else countOfMilk -= latteNeedMilk;
+
+        if(countOfBeans - latteNeedBeans <= 0) {
+            System.out.println("Sorry, not enough coffee beans!");
+            return;
+        } else countOfBeans -= latteNeedBeans;
+
+        if(countOfDisposableCups - 1 <= 0) {
+            System.out.println("Sorry, not enough disposable cups of coffee!");
+            return;
+        } else countOfDisposableCups--;
+
+        countOfMoney += latteCosts;
+    }
+
+    private static void buyCappuccino() {
+
+        if(countOfWater - cappuccinoNeedWater <= 0) {
+            System.out.println("Sorry, not enough water!");
+            return;
+        } else countOfWater -= cappuccinoNeedWater;
+
+        if(countOfMilk - cappuccinoNeedMilk <= 0) {
+            System.out.println("Sorry, not enough milk!");
+            return;
+        } else countOfMilk -= cappuccinoNeedMilk;
+
+        if(countOfBeans - cappuccinoNeedBeans <= 0) {
+            System.out.println("Sorry, not enough coffee beans!");
+            return;
+        } else countOfBeans -= cappuccinoNeedBeans;
+
+        if(countOfDisposableCups - 1 <= 0) {
+            System.out.println("Sorry, not enough disposable cups of coffee!");
+            return;
+        } else countOfDisposableCups--;
+
+        countOfMoney += cappuccinoCosts;
     }
 
     private static void printIngredients() {
